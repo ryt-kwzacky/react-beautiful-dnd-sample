@@ -51,13 +51,16 @@ const Home: React.FC<{}> = ({}) => {
                 {items.map((item, i) => {
                   return (
                     <Draggable draggableId={item.id} index={i} key={item.id}>
-                      {(provided) => (
+                      {(provided, snapshot) => (
                         <div
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <ListItem item={item}></ListItem>
+                          <ListItem
+                            item={item}
+                            isDragging={snapshot.isDragging}
+                          ></ListItem>
                         </div>
                       )}
                     </Draggable>
