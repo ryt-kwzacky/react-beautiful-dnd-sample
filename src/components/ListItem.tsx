@@ -7,7 +7,13 @@ const ListItem: React.FC<{
   isDragging: boolean;
 }> = ({ item, isDragging }) => {
   return (
-    <div className={[styles.container, styles.margin].join(" ")}>
+    <div
+      className={[
+        styles.container,
+        styles.margin,
+        isDragging ? styles.grayBackground : "",
+      ].join(" ")}
+    >
       <p>is dragging: {String(isDragging)}</p>
       <p>{item.id}</p>
       <p>{item.content}</p>
