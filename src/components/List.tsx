@@ -1,9 +1,14 @@
 import styles from "./List.module.scss";
 
-const List: React.FC<{}> = ({ children }) => {
+const List: React.FC<{
+  isDragging;
+}> = ({ isDragging, children }) => {
   return (
-    <div className={styles.list}>
-      <h1>List</h1>
+    <div
+      className={[styles.list, isDragging ? styles.backgroundColor : ""].join(
+        " "
+      )}
+    >
       {children}
     </div>
   );

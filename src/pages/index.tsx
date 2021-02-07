@@ -25,29 +25,47 @@ const reorder = (
 
 const Home: React.FC<{}> = ({}) => {
   const [items, setItems] = useState(initialItems);
+
   const handleOnDragEnd = (result) => {
-    if (
-      !result.destination ||
-      result.destination.index === result.source.index
-    ) {
+    // ここでidを見て処理変える
+    const { destination, source } = result;
+    if (!destination || destination.index === source.index) {
       return;
     }
 
-    const newItems = reorder(
-      items,
-      result.source.index,
-      result.destination.index
-    );
+    console.log(`draggableId: ${result.draggableId}`);
+    // これらを参照して、エリア外に飛ばせる
+    console.log(`destination.draggableId: ${destination.droppableId}`);
+    console.log(`source.draggableId: ${source.droppableId}`);
 
-    setItems(newItems);
+    if (destination.droppableId === "another") {
+      console.log(`destination.droppableId: ${destination.droppableId}`);
+      // anotherにきた場合は今見えているリストから削除する
+    } else if (destination.droppableId === "test") {
+      const newItems = reorder(
+        items,
+        result.source.index,
+        result.destination.index
+      );
+      setItems(newItems);
+    }
   };
   return (
     <>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="test">
+        <Droppable droppableId="another">
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              <List>
+              <p>test!!!</p>
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+        <Droppable droppableId="test">
+          {(provided, snapshot) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              <h1>List</h1>
+              <List isDragging={snapshot.isDraggingOver}>
                 {items.map((item, i) => {
                   return (
                     <Draggable draggableId={item.id} index={i} key={item.id}>
@@ -66,8 +84,8 @@ const Home: React.FC<{}> = ({}) => {
                     </Draggable>
                   );
                 })}
+                {provided.placeholder}
               </List>
-              {provided.placeholder}
             </div>
           )}
         </Droppable>

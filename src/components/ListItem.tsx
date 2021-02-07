@@ -11,7 +11,7 @@ const ListItem: React.FC<{
       className={[
         styles.container,
         styles.margin,
-        isDragging ? styles.grayBackground : "",
+        isDragging ? styles.backgroundColor : "",
       ].join(" ")}
     >
       <p>is dragging: {String(isDragging)}</p>
